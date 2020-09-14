@@ -21,6 +21,7 @@
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
+    "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^6.2.2",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
@@ -40,7 +41,14 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "quotes": ["error", "single", "avoid-escape"],
+      "eqeqeq": ["error", "allow-null"],
+      "indent": ["error", 2],
+      "semi": ["error", "never"],
+      "comma-spacing": ["error", { "before": false, "after": true }],
+      "comma-dangle": ["error", "always-multiline"]
+    }
   },
   "browserslist": [
     "> 1%",

@@ -39,63 +39,63 @@
 
 <script>
 export default {
-	name: 'LoginPage',
-	data() {
-		return {
-			valid: true,
-			showPassword: false,
-			email: '',
-			emailRules: [
-				v => !!v || 'E-mail is required',
-				v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-			],
-			password: '',
-			passwordRules: [
-				v => !!v || 'Password is required',
-				v =>
-					(v && v.length <= 10) || 'Password must be less than 10 characters',
-			],
-		};
-	},
-	computed: {
-		user() {
-			return this.$store.getters.user;
-		},
-		error() {
-			return this.$store.getters.error;
-		},
-		loading() {
-			return this.$store.getters.loading;
-		},
-	},
-	methods: {
-		onSignin() {
-			console.log('onSignin');
-			this.validate();
-			// 0. submit 이벤트로 이곳에 진입해야 한다.
-			// 1. 입력폼의 데이터들의 유효성을 검사한다.
-			// 2. 데이터가 유효하다면 로그인을 진행한다.
-			/*
+  name: 'LoginPage',
+  data() {
+    return {
+      valid: true,
+      showPassword: false,
+      email: '',
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+      ],
+      password: '',
+      passwordRules: [
+        v => !!v || 'Password is required',
+        v =>
+          (v && v.length <= 10) || 'Password must be less than 10 characters',
+      ],
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user
+    },
+    error() {
+      return this.$store.getters.error
+    },
+    loading() {
+      return this.$store.getters.loading
+    },
+  },
+  methods: {
+    onSignin() {
+      console.log('onSignin')
+      this.validate()
+      // 0. submit 이벤트로 이곳에 진입해야 한다.
+      // 1. 입력폼의 데이터들의 유효성을 검사한다.
+      // 2. 데이터가 유효하다면 로그인을 진행한다.
+      /*
       this.$store.dispatch("signUserIn", {
         email: this.email,
         password: this.password,
 			});
 			*/
-		},
-		onDismissed() {
-			this.$store.dispatch('clearError');
-		},
-		validate() {
-			this.$refs.form.validate();
-		},
-		reset() {
-			this.$refs.form.reset();
-		},
-		resetValidation() {
-			this.$refs.form.resetValidation();
-		},
-	},
-};
+    },
+    onDismissed() {
+      this.$store.dispatch('clearError')
+    },
+    validate() {
+      this.$refs.form.validate()
+    },
+    reset() {
+      this.$refs.form.reset()
+    },
+    resetValidation() {
+      this.$refs.form.resetValidation()
+    },
+  },
+}
 </script>
 
 <style></style>

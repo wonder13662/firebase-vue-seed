@@ -39,34 +39,34 @@
 
 <script>
 export default {
-	name: 'App',
-	data() {
-		return {
-			links: [
-				{
-					label: 'Home',
-					url: '/',
-				},
-				{
-					label: 'Login',
-					url: '/login',
-				},
-				{
-					label: 'Signup',
-					url: '/signup',
-				},
-				{
-					label: 'Dashboard',
-					url: '/dashboard',
-				},
-			],
-		};
-	},
-	methods: {
-		toggleTheme() {
-			this.$vuetify.theme.themes.dark.anchor = '#41B883';
-			this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
-		},
-	},
-};
+  name: 'App',
+  data() {
+    return {
+      links: [
+        {
+          label: 'Home',
+          url: '/',
+        },
+        {
+          label: 'Login',
+          url: '/login',
+        },
+        {
+          label: 'Signup',
+          url: '/signup',
+        },
+        {
+          label: 'Dashboard',
+          url: '/dashboard',
+        },
+      ],
+    }
+  },
+  methods: {
+    toggleTheme() {
+      this.$vuetify.theme.themes.dark.anchor = '#41B883'
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark
+    },
+  },
+}
 </script>

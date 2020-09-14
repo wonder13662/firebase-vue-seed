@@ -75,7 +75,7 @@ export default {
     EmployeesTable,
     EventTimeline,
     SalesGraph,
-    StatisticCard
+    StatisticCard,
   },
   data() {
     return {
@@ -84,11 +84,11 @@ export default {
       sales: salesData,
       selectedEmployee: {
         name: '',
-        title: ''
+        title: '',
       },
       snackbar: false,
       statistics: statisticsData,
-      timeline: timelineData
+      timeline: timelineData,
     }
   },
   methods: {
@@ -99,7 +99,7 @@ export default {
     },
     showMoreContent(entries) {
       this.loadNewContent = entries[0].isIntersecting
-    }
-  }
+    },
+  },
 }
 </script>

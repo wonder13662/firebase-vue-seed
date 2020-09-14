@@ -27,8 +27,8 @@ export default {
   props: {
     timeline: {
       type: Array,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 }
 </script>

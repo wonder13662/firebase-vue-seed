@@ -24,8 +24,8 @@ export default {
   props: {
     sale: {
       type: Object,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 }
 </script>

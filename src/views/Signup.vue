@@ -55,7 +55,7 @@ export default {
     agreeToTermsRules: [
       value =>
         !!value ||
-        'You must agree to the terms and conditions to sign up for an account.'
+        'You must agree to the terms and conditions to sign up for an account.',
     ],
     birthday: '',
     browsers: ['Chrome', 'Firefox', 'Safari', 'Edge', 'Brave'],
@@ -70,9 +70,9 @@ export default {
       value => value.includes('.') || 'Email should include a period symbol.',
       value =>
         value.indexOf('.') <= value.length - 3 ||
-        'Email should contain a valid domain extension.'
+        'Email should contain a valid domain extension.',
     ],
-    formValidity: false
+    formValidity: false,
   }),
   methods: {
     resetForm() {
@@ -83,7 +83,7 @@ export default {
     },
     validateForm() {
       this.$refs.signUpForm.validate()
-    }
-  }
+    },
+  },
 }
 </script>

@@ -15,27 +15,27 @@ export default {
   props: {
     employees: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   data: () => ({
     headers: [
       { text: 'Employee ID', value: 'id' },
       { text: 'Name', value: 'name' },
       { text: 'Position Title', value: 'title' },
-      { text: 'Salary', value: 'salary' }
-    ]
+      { text: 'Salary', value: 'salary' },
+    ],
   }),
   methods: {
     selectRow(event) {
       const employee = {
         name: event.name,
-        title: event.title
+        title: event.title,
       }
 
       this.$emit('select-employee', employee)
-    }
-  }
+    },
+  },
 }
 </script>
 

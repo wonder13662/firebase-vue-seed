@@ -11,9 +11,9 @@ export default {
   props: {
     statistic: {
       type: Object,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 }
 </script>
 
