@@ -72,7 +72,7 @@ export default {
     onSignin() {
       this.validate()
       if(this.valid) {
-        this.$store.dispatch('auth/signUserIn', {
+        this.$store.dispatch('auth/signIn', {
           email: this.email,
           password: this.password,
         })
