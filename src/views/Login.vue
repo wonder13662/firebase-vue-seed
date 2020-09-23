@@ -70,20 +70,16 @@ export default {
   },
   methods: {
     onSignin() {
-      console.log('onSignin')
       this.validate()
-      // 0. submit 이벤트로 이곳에 진입해야 한다.
-      // 1. 입력폼의 데이터들의 유효성을 검사한다.
-      // 2. 데이터가 유효하다면 로그인을 진행한다.
-      /*
-      this.$store.dispatch("signUserIn", {
-        email: this.email,
-        password: this.password,
-			});
-			*/
+      if(this.valid) {
+        this.$store.dispatch('auth/signUserIn', {
+          email: this.email,
+          password: this.password,
+        })
+      }
     },
     onDismissed() {
-      this.$store.dispatch('clearError')
+      this.$store.dispatch('network/clearError')
     },
     validate() {
       this.$refs.form.validate()
