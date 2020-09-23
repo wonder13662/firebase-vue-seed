@@ -14,7 +14,7 @@ export default  {
     },
   },
   actions: {
-    signUserUp({ commit, dispatch }, payload) {
+    signUp({ commit, dispatch }, payload) {
       dispatch('network/clearError', null, { root: true })
 
       firebase
@@ -28,14 +28,14 @@ export default  {
           dispatch('network/setError', error, { root: true })
         })
     },
-    signUserIn({ commit, dispatch }, payload) {
+    signIn({ commit, dispatch }, payload) {
       dispatch('network/setLoading', true, { root: true })
       dispatch('network/clearError', null, { root: true })
 
       firebase
         .signInWithEmailAndPassword(payload)
         .then(() => {
-          commit('SET_USER_DATA', payload)
+          commit('SET_USER_DATA', { email: payload.email })
           dispatch('network/setLoading', false, { root: true })
         })
         .catch(error => {
