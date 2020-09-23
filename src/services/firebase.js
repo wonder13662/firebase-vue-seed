@@ -5,6 +5,18 @@ import * as firebase from 'firebase'
 // TODO 2. Cloud Firestore
 
 const module = {
+  init() {
+    firebase.initializeApp({
+      apiKey: 'AIzaSyCVC2hf2XrtzbLpSa_BE0BtmCKaxNYvnxk',
+      authDomain: 'playground-9a00c.firebaseapp.com',
+      databaseURL: 'https://playground-9a00c.firebaseio.com',
+      projectId: 'playground-9a00c',
+      storageBucket: 'playground-9a00c.appspot.com',
+      messagingSenderId: '140017567845',
+      appId: '1:140017567845:web:e20c8175c58a29533d9e8c',
+      measurementId: 'G-EYJZZMVJPX',
+    })
+  },
   async createUserWithEmailAndPassword({ email, password }) {
     // TODO 유저의 추가 정보를 넣을 수 있도록 해야 함
     // TODO 여러 명의 유저들을 한꺼번에 넣으려면?
