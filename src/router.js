@@ -43,6 +43,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  // TODO 이렇게 store를 직접 참조하는 것이 최선일까?
   const loggedIn = store.getters['auth/signedIn']
   if (to.matched.some(record => record.meta.requiresAuth) && !loggedIn) {
     next('/')
