@@ -16,7 +16,7 @@ new Vue({
   created() {
     firebase.init()
     firebase.onAuthChanged((user) => {
-      this.$store.commit('auth/SET_USER_DATA', { email: user.email })
+      this.$store.commit('auth/SET_USER_DATA', user?{ email: user.email }:null)
     })
     // TODO router-guard 만들기
     // 1. 로그인 상태
