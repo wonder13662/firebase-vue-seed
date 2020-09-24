@@ -41,6 +41,14 @@ const module = {
       return await Promise.reject(err)
     }
   },
+  async signOut() {
+    try {
+      await firebase.auth().signOut()
+      return await Promise.resolve()
+    } catch (err) {
+      return await Promise.reject(err)
+    }
+  },
   onAuthChanged(callback) {
     firebase.auth().onAuthStateChanged((user) => callback(user))
   },

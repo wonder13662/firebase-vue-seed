@@ -43,15 +43,26 @@ export default  {
           dispatch('network/setError', error, { root: true })
         })
     },
-    /*
     signOut({ commit, dispatch }, payload) {
+      dispatch('network/setLoading', true, { root: true })
+      dispatch('network/clearError', null, { root: true })
 
+      firebase
+        .signOut()
+        .then(() => {
+          commit('CLEAR_USER_DATA', { email: payload.email })
+          dispatch('network/setLoading', false, { root: true })
+        })
+        .catch(error => {
+          dispatch('network/setLoading', false, { root: true })
+          dispatch('network/setError', error, { root: true })
+        })
     },
-    */
   },
   getters: {
-    user(state) {
-      return state.user
+    signedIn: state => {
+      console.log('state.user:', state.user)
+      return !!state.user
     },
   },
 }
