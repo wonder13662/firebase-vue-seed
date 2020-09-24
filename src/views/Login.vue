@@ -7,7 +7,7 @@
 			ref="form"
 			v-model="valid"
 			lazy-validation
-			@submit.prevent="onSignin"
+			@submit.prevent="onLogin"
 		>
 			<v-card-text>
 				<v-text-field
@@ -69,11 +69,11 @@ export default {
     },
   },
   methods: {
-    onSignin() {
+    onLogin() {
       this.validate()
       if(this.valid) {
         this.$store
-          .dispatch('auth/signIn', {
+          .dispatch('auth/login', {
             email: this.email,
             password: this.password,
           })

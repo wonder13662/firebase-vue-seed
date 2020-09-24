@@ -5,7 +5,7 @@
     <v-btn text rounded :to="'/'">Home</v-btn>
     <v-btn v-if="!signedIn" text rounded :to="'/login'">Login</v-btn>
     <v-btn v-if="signedIn" text rounded :to="'/dashboard'">Dashboard</v-btn>
-    <v-btn v-if="signedIn" text rounded @click="signOut">Sign Out</v-btn>
+    <v-btn v-if="signedIn" text rounded @click="logout">Logout</v-btn>
   </v-app-bar>
 </template>
 
@@ -28,10 +28,9 @@ export default {
     },
   },
   methods: {
-    signOut() {
-      console.log('signOut')
+    logout() {
       this.$store
-        .dispatch('auth/signOut')
+        .dispatch('auth/logout')
         .then(() => {
           this.$router.push({ name: 'login' })
         })

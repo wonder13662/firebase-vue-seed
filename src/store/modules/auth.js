@@ -28,7 +28,7 @@ export default  {
           dispatch('network/setError', error, { root: true })
         })
     },
-    signIn({ commit, dispatch }, payload) {
+    login({ commit, dispatch }, payload) {
       dispatch('network/setLoading', true, { root: true })
       dispatch('network/clearError', null, { root: true })
 
@@ -43,7 +43,7 @@ export default  {
           dispatch('network/setError', error, { root: true })
         })
     },
-    signOut({ commit, dispatch }, payload) {
+    logout({ commit, dispatch }, payload) {
       dispatch('network/setLoading', true, { root: true })
       dispatch('network/clearError', null, { root: true })
 
