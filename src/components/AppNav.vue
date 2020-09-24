@@ -2,7 +2,7 @@
   <v-app-bar app color="primary" dark>
     <v-toolbar-title>Vuetify Dashboard</v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-btn text rounded :to="'/home'">Home</v-btn>
+    <v-btn text rounded :to="'/'">Home</v-btn>
     <v-btn v-if="!signedIn" text rounded :to="'/login'">Login</v-btn>
     <v-btn v-if="signedIn" text rounded :to="'/dashboard'">Dashboard</v-btn>
     <v-btn v-if="signedIn" text rounded @click="signOut">Sign Out</v-btn>
