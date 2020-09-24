@@ -18,8 +18,8 @@
 // (완료)4. requiresAuth
 
 // # 리팩토링
-// 1. login? signIn?
-// 2. logOut? signOut?
+// 1. login? signIn? -> logIn
+// 2. logOut? signOut? -> logOut
 
 export default {
   computed: {
