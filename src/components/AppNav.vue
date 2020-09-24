@@ -12,10 +12,10 @@
 <script>
 // TODO
 // # AppNav 메뉴 보이는 상태
-// 1. 로그인 - 일반 유저
+// (완료)1. 로그인 - 일반 유저
 // 2. 로그인 - Admin
-// 3. 로그아웃
-// 4. requiresAuth
+// (완료)3. 로그아웃
+// (완료)4. requiresAuth
 
 // # 리팩토링
 // 1. login? signIn?
