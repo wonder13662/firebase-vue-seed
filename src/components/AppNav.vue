@@ -30,6 +30,15 @@ export default {
   methods: {
     signOut() {
       console.log('signOut')
+      this.$store
+        .dispatch('auth/signOut')
+        .then(() => {
+          this.$router.push({ name: 'login' })
+        })
+        .catch((error) => {
+          console.log('error:', error)
+        })
+
     },
   },
 }
