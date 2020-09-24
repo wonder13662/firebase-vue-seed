@@ -72,10 +72,17 @@ export default {
     onSignin() {
       this.validate()
       if(this.valid) {
-        this.$store.dispatch('auth/signIn', {
-          email: this.email,
-          password: this.password,
-        })
+        this.$store
+          .dispatch('auth/signIn', {
+            email: this.email,
+            password: this.password,
+          })
+          .then(() => {
+            this.$router.push({ name: 'dashboard' })
+          })
+          .catch((error) => {
+            console.log('error:', error)
+          })
       }
     },
     onDismissed() {
