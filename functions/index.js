@@ -9,6 +9,7 @@ admin.initializeApp();
 const db = admin.firestore();
 
 const validator = require('validator');
+const dayjs = require('dayjs')
 
 // Take the text parameter passed to this HTTP endpoint and insert it into
 // Cloud Firestore under the path /messages/:documentId/original
@@ -110,3 +111,13 @@ exports.addUsers = functions.https.onRequest(async (req, res) => {
     errors
   } });
 })
+
+// https://firebase.google.com/docs/functions/callable
+exports.echo = functions.https.onCall((data, context) => {
+  return { data }
+});
+
+// https://firebase.google.com/docs/functions/http-events
+exports.date = functions.https.onRequest((req, res) => {
+  res.status(200).send(dayjs())
+});

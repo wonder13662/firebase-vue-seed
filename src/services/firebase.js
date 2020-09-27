@@ -21,12 +21,15 @@ export default {
 
     this.db = firebase.firestore()
     this.functions = firebase.functions()
+
+    // https://firebase.google.com/docs/reference/js/firebase.functions.Functions#usefunctionsemulator
+    this.functions.useFunctionsEmulator('http://localhost:5001')
   },
   // firebase functions example
-  async addUsers(users) {
-    const func = firebase.functions().httpsCallable('addUsers')
+  async echo(message) {
+    const func = firebase.functions().httpsCallable('echo')
     try {
-      const result = await func({ users })
+      const result = await func({ message })
       console.log('result.data: ', result.data)
     } catch(error) {
       // const code = error.code;

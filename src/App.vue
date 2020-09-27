@@ -17,9 +17,17 @@
 
 <script>
 import AppNav from '@/components/AppNav'
+import firebase from '@/services/firebase'
 
 export default {
   components: { AppNav },
   name: 'App',
+  created() {
+    firebase.echo('hello').then((result) => {
+      console.log('result:', result)
+    }).catch(error => {
+      console.log('error:', error)
+    })
+  },
 }
 </script>
