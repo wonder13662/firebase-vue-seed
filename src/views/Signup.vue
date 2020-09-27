@@ -11,17 +11,30 @@
             :rules="emailRules"
             required
           ></v-text-field>
-          <v-autocomplete
-            label="Which browser do you use?"
-            :items="browsers"
-          ></v-autocomplete>
-          <v-file-input label="Attach profile picture"></v-file-input>
           <v-text-field
-            v-model="birthday"
-            label="Birthday"
-            readonly
+            label="First name"
+            type="text"
+            v-model="firstName"
+            :rules="nameRules"
+            required
           ></v-text-field>
-          <v-date-picker v-model="birthday"></v-date-picker>
+          <v-text-field
+            label="Last name"
+            type="text"
+            v-model="lastName"
+            :rules="nameRules"
+            required
+          ></v-text-field>
+          <v-autocomplete
+            label="Which group are you in?"
+            :items="groups"
+            required
+          ></v-autocomplete>
+          <v-autocomplete
+            label="Which team are you in?"
+            :items="teams"
+            required
+          ></v-autocomplete>
           <v-checkbox
             label="Agree to terms & conditions"
             v-model="agreeToTerms"
@@ -35,13 +48,6 @@
             :disabled="!formValidity"
             >Submit</v-btn
           >
-          <v-btn color="success" class="mr-4" @click="validateForm"
-            >Validate Form</v-btn
-          >
-          <v-btn color="warning" class="mr-4" @click="resetValidation"
-            >Reset Validation</v-btn
-          >
-          <v-btn color="error" @click="resetForm">Reset</v-btn>
         </v-form>
       </v-col>
     </v-row>
@@ -58,7 +64,7 @@ export default {
         'You must agree to the terms and conditions to sign up for an account.',
     ],
     birthday: '',
-    browsers: ['Chrome', 'Firefox', 'Safari', 'Edge', 'Brave'],
+    groups: ['Chrome', 'Firefox', 'Safari', 'Edge', 'Brave'],
     email: '',
     emailRules: [
       value => !!value || 'Email is required.',

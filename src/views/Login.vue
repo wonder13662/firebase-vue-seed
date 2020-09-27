@@ -29,7 +29,7 @@
 			</v-card-text>
 			<v-divider></v-divider>
 			<v-card-actions>
-				<v-btn color="success">Register</v-btn>
+				<v-btn color="success" :to="'/signup'">Register</v-btn>
 				<v-spacer></v-spacer>
 				<v-btn color="info" type="submit" :loading="loading">Login</v-btn>
 			</v-card-actions>

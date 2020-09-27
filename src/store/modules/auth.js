@@ -14,19 +14,22 @@ export default  {
     },
   },
   actions: {
-    signUp({ commit, dispatch }, payload) {
+    async signUp({ commit, dispatch }, payload) {
       dispatch('network/clearError', null, { root: true })
 
-      firebase
-        .createUserWithEmailAndPassword(payload)
-        .then(() => {
-          commit('SET_USER_DATA', payload)
-          dispatch('network/setLoading', false, { root: true })
-        })
-        .catch(error => {
-          dispatch('network/setLoading', false, { root: true })
-          dispatch('network/setError', error, { root: true })
-        })
+      try {
+        // 1. Set User Authentication Info - Email, Password
+        await firebase.createUserWithEmailAndPassword(payload)
+
+        // 2. Set User Info - Email, First name, Last name, Group, Team
+        await firebase.createUserInfo(payload)
+
+        dispatch('network/setLoading', false, { root: true })
+        commit('SET_USER_DATA', payload)
+      } catch(error) {
+        dispatch('network/setLoading', false, { root: true })
+        dispatch('network/setError', error, { root: true })
+      }
     },
     login({ commit, dispatch }, payload) {
       dispatch('network/setLoading', true, { root: true })

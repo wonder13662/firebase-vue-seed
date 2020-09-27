@@ -4,7 +4,8 @@ import * as firebase from 'firebase'
 // TODO 1. Realtime Database
 // TODO 2. Cloud Firestore
 
-const module = {
+export default {
+  db:null,
   init() {
     firebase.initializeApp({
       apiKey: 'AIzaSyCVC2hf2XrtzbLpSa_BE0BtmCKaxNYvnxk',
@@ -16,8 +17,17 @@ const module = {
       appId: '1:140017567845:web:e20c8175c58a29533d9e8c',
       measurementId: 'G-EYJZZMVJPX',
     })
+
+    this.db = firebase.firestore()
   },
   async createUserWithEmailAndPassword({ email, password }) {
+    if(!email) {
+      return await Promise.reject(new Error('Email is not valid'))
+    }
+    if(!password) {
+      return await Promise.reject(new Error('Password is not valid'))
+    }
+
     // TODO 유저의 추가 정보를 넣을 수 있도록 해야 함
     // TODO 여러 명의 유저들을 한꺼번에 넣으려면?
     try {
@@ -25,8 +35,39 @@ const module = {
         .auth()
         .createUserWithEmailAndPassword(email, password)
       return await Promise.resolve()
-    } catch (err) {
-      return await Promise.reject(err)
+    } catch (error) {
+      return await Promise.reject(error)
+    }
+  },
+  async createUserInfo({ email, firstName, lastName, group, team }) {
+    if(!email) {
+      return await Promise.reject(new Error('Email is not valid'))
+    }
+    if(!firstName) {
+      return await Promise.reject(new Error('firstName is not valid'))
+    }
+    if(!lastName) {
+      return await Promise.reject(new Error('lastName is not valid'))
+    }
+    if(!group) {
+      return await Promise.reject(new Error('group is not valid'))
+    }
+    if(!team) {
+      return await Promise.reject(new Error('team is not valid'))
+    }
+
+    const userInfo = {
+      email,
+      firstName,
+      lastName,
+      group,
+      team,
+    }
+    try {
+      const docRef = await this.db.collection('users').add(userInfo)
+      return await Promise.resolve(docRef)
+    } catch (error) {
+      return await Promise.reject(error)
     }
   },
   async signInWithEmailAndPassword({ email, password }) {
@@ -37,8 +78,8 @@ const module = {
 
       console.log('auth:', auth)
       return await Promise.resolve()
-    } catch (err) {
-      return await Promise.reject(err)
+    } catch (error) {
+      return await Promise.reject(error)
     }
   },
   async signOut() {
@@ -53,5 +94,3 @@ const module = {
     firebase.auth().onAuthStateChanged((user) => callback(user))
   },
 }
-
-export default module
