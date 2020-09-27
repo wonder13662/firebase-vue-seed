@@ -20,3 +20,4 @@ apollo.config.js
 
 # Firebase
 *.cache
+*.log
