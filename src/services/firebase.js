@@ -6,6 +6,7 @@ import * as firebase from 'firebase'
 
 export default {
   db:null,
+  functions:null,
   init() {
     firebase.initializeApp({
       apiKey: 'AIzaSyCVC2hf2XrtzbLpSa_BE0BtmCKaxNYvnxk',
@@ -19,6 +20,20 @@ export default {
     })
 
     this.db = firebase.firestore()
+    this.functions = firebase.functions()
+  },
+  // firebase functions example
+  async addUsers(users) {
+    const func = firebase.functions().httpsCallable('addUsers')
+    try {
+      const result = await func({ users })
+      console.log('result.data: ', result.data)
+    } catch(error) {
+      // const code = error.code;
+      // const message = error.message;
+      // const details = error.details;
+      console.log('error:', error)
+    }
   },
   async createUserWithEmailAndPassword({ email, password }) {
     if(!email) {

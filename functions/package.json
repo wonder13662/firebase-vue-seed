@@ -14,13 +14,57 @@
   },
   "main": "index.js",
   "dependencies": {
-    "firebase-admin": "^8.10.0",
-    "firebase-functions": "^3.6.1"
+    "firebase-admin": "9.2.0",
+    "firebase-functions": "^3.11.0",
+    "validator": "^13.1.17"
   },
   "devDependencies": {
     "eslint": "^5.12.0",
     "eslint-plugin-promise": "^4.0.1",
     "firebase-functions-test": "^0.2.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {
+      "quotes": [
+        "error",
+        "single",
+        "avoid-escape"
+      ],
+      "eqeqeq": [
+        "error",
+        "allow-null"
+      ],
+      "indent": [
+        "error",
+        2
+      ],
+      "semi": [
+        "error",
+        "never"
+      ],
+      "comma-spacing": [
+        "error",
+        {
+          "before": false,
+          "after": true
+        }
+      ],
+      "comma-dangle": [
+        "error",
+        "always-multiline"
+      ]
+    }
   },
   "private": true
 }
