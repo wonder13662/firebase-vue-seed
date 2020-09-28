@@ -8,6 +8,8 @@
     "deploy": "firebase deploy",
     "hosting": "firebase serve --only hosting",
     "emulator": "firebase emulators:start",
+    "dev": "npm run kill-emulator & npm run emulator & npm run serve",
+    "kill-emulator": "./kill-emulator.sh",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

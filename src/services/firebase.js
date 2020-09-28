@@ -23,7 +23,10 @@ export default {
     this.functions = firebase.functions()
 
     // https://firebase.google.com/docs/reference/js/firebase.functions.Functions#usefunctionsemulator
-    this.functions.useFunctionsEmulator('http://localhost:5001')
+    // 로컬 작업시에는 에뮬레이터로 확인
+    if(window.location.hostname === 'localhost') {
+      this.functions.useFunctionsEmulator('http://localhost:5001')
+    }
   },
   // firebase functions example
   async echo(message) {
