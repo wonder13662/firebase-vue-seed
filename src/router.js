@@ -39,6 +39,11 @@ const router = new Router({
       name: 'signup',
       component: () => import('./views/Signup.vue'),
     },
+    {
+      path: '/excel',
+      name: 'excel',
+      component: () => import('./views/ExcelUpload.vue'),
+    },
   ],
 })
 

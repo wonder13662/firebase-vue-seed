@@ -5,6 +5,7 @@
     <v-btn text rounded :to="'/'">Home</v-btn>
     <v-btn v-if="!signedIn" text rounded :to="'/login'">Login</v-btn>
     <v-btn v-if="signedIn" text rounded :to="'/dashboard'">Dashboard</v-btn>
+    <v-btn v-if="signedIn" text rounded :to="'/excel'">Excel</v-btn>
     <v-btn v-if="signedIn" text rounded @click="logout">Logout</v-btn>
   </v-app-bar>
 </template>
