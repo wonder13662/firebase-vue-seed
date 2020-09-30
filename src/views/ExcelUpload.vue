@@ -3,20 +3,10 @@
     <v-row
       align="left"
       justify="space-around">
-      <v-btn
-      depressed
-      color="primary"
-      @click="exportExcel">
-        Primary
-      </v-btn>
+      <v-file-input label="Excel File Input" @change="change"></v-file-input>
     </v-row>
-    <v-row
-      align="left"
-      justify="space-around">
-    <v-file-input label="Excel File Input" @change="change"></v-file-input>
-    </v-row>
-    <v-row>
-      <v-simple-table v-if="items.length > 0">
+    <v-row v-if="hasItems">
+      <v-simple-table>
         <template v-slot:default>
           <thead>
             <tr>
@@ -48,11 +38,21 @@
         </template>
       </v-simple-table>
     </v-row>
+    <v-row>
+      <v-btn v-if="hasItems" color="primary" @click="upload">
+        Upload
+      </v-btn>
+      <v-btn color="primary" @click="exportExcel">
+        Template Download
+      </v-btn>
+    </v-row>
+
   </div>
 </template>
 
 <script>
 import XLSX from 'xlsx'
+import firebase from '@/services/firebase'
 
 export default {
   data() {
@@ -63,8 +63,13 @@ export default {
       items: [],
     }
   },
+  computed: {
+    hasItems() {
+      return this.items.length > 0
+    },
+  },
   methods: {
-    // TODO 업로드한 파일의 내역을 화면에 보여주기
+    // TODO 테이블의 내용을 DB에 업데이트
     exportExcel() {
       console.log('exportExcel')
       // https://github.com/SheetJS/sheetjs/blob/master/demos/vue/pages/index.vue
@@ -88,9 +93,33 @@ export default {
         // const json = XLSX.utils.sheet_to_json(worksheet, {header:1})
         const json = XLSX.utils.sheet_to_json(worksheet)
         console.log('json:', json)
+
+        // 한글 필드명을 영어 필드명으로 바꿈
         this.items = json
       }
       reader.readAsArrayBuffer(file)
+    },
+    upload() {
+      if(!this.items || this.items.length === 0) {
+        console.log('TODO 에러메시지 노출')
+        console.log('items가 정의되지 않았습니다')
+        return
+      }
+
+      const itemsRenamed = this.items.map(item => {
+        return {
+          name: item['이름'],
+          email: item.email,
+          group: item['그룹'],
+          team: item['팀'],
+        }
+      })
+
+      firebase.addUsers(itemsRenamed).then((result) => {
+        console.log('result:', result)
+      }).catch(error => {
+        console.log('error:', error)
+      })
     },
   },
 }

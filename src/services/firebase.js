@@ -33,11 +33,21 @@ export default {
     const func = firebase.functions().httpsCallable('echo')
     try {
       const result = await func({ message })
-      console.log('result.data: ', result.data)
+      console.log('result.data:', result.data)
+      return result.data
     } catch(error) {
       // const code = error.code;
       // const message = error.message;
       // const details = error.details;
+      console.log('error:', error)
+    }
+  },
+  async addUsers(users) {
+    const func = firebase.functions().httpsCallable('addUsers')
+    try {
+      const result = await func({ users })
+      return result.data
+    } catch(error) {
       console.log('error:', error)
     }
   },

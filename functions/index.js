@@ -42,80 +42,102 @@ exports.makeUppercase = functions.firestore.document('/messages/{documentId}')
 
 const hasEmail = async (email) => {
   const snapshot = await db.collection('users').where('email', '==', email).get();
+  console.log('snapshot.empty:', snapshot.empty)
   return !snapshot.empty
 }
 
-const throwError = (message, detail) => {
-  throw new functions.https.HttpsError(message, detail)
+// https://firebase.google.com/docs/reference/functions/providers_https_#functionserrorcode
+const ERROR_CODE = {
+  OK: 'ok',
+  CANCELLED: 'cancelled',
+  UNKNOWN: 'unknown',
+  INVALID_ARGUMENT: 'invalid-argument',
+  DEADLINE_EXCEEDED: 'deadline-exceeded',
+  NOT_FOUND: 'not-found',
+  ALREADY_EXISTS: 'already-exists',
+  PERMISSION_DENIED: 'permission-denied',
+  RESOURCE_EXHAUSTED: 'resource-exhausted',
+  FAILED_PRECONDITION: 'failed-precondition',
+  ABORTED: 'aborted',
+  OUT_OF_RANGE: 'out-of-range',
+  UNIMPLEMENTED: 'unimplemented',
+  INTERNAL: 'internal',
+  UNAVAILABLE: 'unavailable',
+  DATA_LOSS: 'data-loss',
+  UNAUTHENTICATED: 'unauthenticated',
 }
 
-const isValidUser = ({ name, email, group, team }) => {
-  if(typeof name !== 'string' && name.length <= 2) {
-    throwError('invalid-argument', 'User name is not valid')
+const getHttpsError = (errorCode, detail) => {
+  throw new functions.https.HttpsError(errorCode, detail)
+}
+
+const verifyUser = ({ name, email, group, team }) => {
+  if(typeof name !== 'string') {
+    return 'User name should be string'
+  }
+  if(!name) {
+    return 'User name should not be undefined'
+  }
+  if(name.length <= 2) {
+    return 'User name should be longer than 2 letters'
   }
   if(!validator.isEmail(email)) {
-    throwError('invalid-argument', 'User email is not valid')
-  }
-  if(!hasEmail(email)) {
-    throwError('duplicated-key', 'User email is already taken')
+    return 'User email should be email format'
   }
   if(typeof group !== 'string' && group.length <= 2) {
     // TODO DB에 저장된 Group 정보로 대조할 것
-    throwError('invalid-argument', 'User group is not valid')
+    return 'User group should be included with groups'
   }
   if(typeof team !== 'string' && team.length <= 2) {
     // TODO DB에 저장된 team 정보로 대조할 것
-    throwError('invalid-argument', 'User team is not valid')
+    return 'User team should be included with teams'
   }
+  return null
 }
-
-exports.hasEmail = functions.https.onRequest(async (req, res) => {
-  if(validator.isEmail(req.body.email)) {
-    res.json({ error: 'Email is not valid' });
-    return;
-  }
-
-  // if(hasEmail(email)) {
-
-  // }
-})
-
-exports.addUsers = functions.https.onRequest(async (req, res) => {
-  if(!req.body.users && req.body.users.length === 0) {
-    res.json({ error: 'User list is not valid' });
-    return;
-  }
-
-  const added = []
-  const errors = []
-  req.body.users.forEach(async (user) => {
-    try {
-      isValidUser(user)
-      const result = await admin.firestore().collection('users').add({
-        name: user.name,
-        email: user.email,
-        group: user.group,
-        team: user.team,
-      });
-      added.push(result)
-    } catch(error) {
-      console.log('error:',error)
-      errors.push(error)
-    }
-  })
-
-  // const writeResult = await admin.firestore().collection('users').add({original: original});
-
-  res.json({ result: {
-    added,
-    errors
-  } });
-})
 
 // https://firebase.google.com/docs/functions/callable
 exports.echo = functions.https.onCall((data, context) => {
-  return { data }
+  return data
 });
+
+exports.addUsers = functions.https.onCall(async (data, context) => {
+  if(!data.users && data.users.length === 0) {
+    return getHttpsError(ERROR_CODE.INVALID_ARGUMENT, 'User list is not valid')
+  }
+
+  // https://firebase.google.com/docs/firestore/manage-data/transactions
+  // TODO 여러개의 레코드셋을 동시에 추가하려면?
+  const errors = [];
+  data.users.forEach(async (user) => {
+    const message = verifyUser(user)
+    if(!message) {
+      try {
+        const { name, email, group, team } = user
+        const result = await admin.firestore().collection('users').add({
+          name,
+          email,
+          group,
+          team,
+        });
+      } catch(error) {
+        errors.push({
+          user,
+          error: error.message
+        })
+      }
+    } else {
+      errors.push({
+        user,
+        error: message
+      })
+    }
+  })
+
+  return {
+    success: errors.length === 0,
+    errors
+  };
+})
 
 // https://firebase.google.com/docs/functions/http-events
 exports.date = functions.https.onRequest((req, res) => {
