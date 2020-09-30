@@ -1,6 +1,20 @@
 <template>
   <div>
+    <v-row
+      align="left"
+      justify="space-around">
+      <v-btn
+      depressed
+      color="primary"
+      @click="exportExcel">
+        Primary
+      </v-btn>
+    </v-row>
+    <v-row
+      align="left"
+      justify="space-around">
     <v-file-input label="Excel File Input" @change="change"></v-file-input>
+    </v-row>
   </div>
 </template>
 
@@ -8,8 +22,24 @@
 import XLSX from 'xlsx'
 
 export default {
+  data() {
+    return {
+      excelTemplate: {
+        data: [['이름', 'email', '그룹', '팀']],
+      },
+    }
+  },
   methods: {
-    // TODO 샘플 Excel 파일 다운로드
+    exportExcel() {
+      console.log('exportExcel')
+      // https://github.com/SheetJS/sheetjs/blob/master/demos/vue/pages/index.vue
+      /* convert state to workbook */
+      const ws = XLSX.utils.aoa_to_sheet(this.excelTemplate.data)
+      const wb = XLSX.utils.book_new()
+      XLSX.utils.book_append_sheet(wb, ws, 'SheetJS')
+      /* generate file and send to client */
+      XLSX.writeFile(wb, 'excel_template.xlsx')
+    },
     change(file) {
       // https://github.com/sheetjs/sheetjs#parsing-workbooks
       const reader = new FileReader()
